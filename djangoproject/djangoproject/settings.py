@@ -25,7 +25,7 @@ SECRET_KEY = 'ybl=2jx86v8e5de(d6h^c2ulao5!%&7^^ax(4bkxbemq3x_@dc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.100.5', '*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -122,5 +122,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-LOGIN_REDIRECT_URL = 'home'

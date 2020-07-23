@@ -16,8 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from stockmgmgt import views
-from django.contrib.auth import views as auth_views
-from django.conf.urls import include
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -26,7 +24,5 @@ urlpatterns = [
     path('update_items/<str:pk>/', views.update_items, name="update_items"),
     path('delete_items/<str:pk>/', views.delete_items, name="delete_items"),
     path('stock_detail/<str:pk>/', views.stock_detail, name="stock_detail"),
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('profile/', views.accounts, name="hq_accounts"),
+    path('admin/', admin.site.urls)
 ] 

@@ -4,7 +4,7 @@ from django.contrib import messages
 import csv
 from .models import *
 from .forms import StockCreateForm, StockSearchForm, StockUpdateForm
-from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def home(request):
     title = 'welcome to our homepage'
@@ -14,11 +14,6 @@ def home(request):
         "form": form,
     }
     return render(request, "home.html", context)
-
-@login_required
-def accounts(request):
-    import ipdb; ipdb.set_trace()
-    return render(request, "hq_account.html")
 
 def list_items(request):
     header = 'LIST OF ITEMS'
