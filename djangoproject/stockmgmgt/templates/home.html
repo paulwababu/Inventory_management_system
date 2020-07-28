@@ -44,27 +44,33 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
+      {% if request.user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="/list_items">Current Stock</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/add_items">Add Stock</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/list_history">List History</a>
+     </li>
+      {% endif %}
     </ul>
-    <form class="form-inline mt-2 mt-md-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <ul class="navbar-nav">
+      {% if request.user.is_authenticated %}
+      <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
+      {% else %}
+      <li><a href="/accounts/login" class="btn btn-primary" style="text-transform: uppercase;">Login</a></li>
+      {% endif %}
+  </ul>
   </div>
 </nav>
 
 <main role="main" class="container">
   <div class="jumbotron">
-    <h1> {{title}}</h1>
-    <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
-    <a class="btn btn-lg btn-primary" href="/docs/4.5/components/navbar/" role="button">View navbar docs &raquo;</a>
-   {{form}}
-  </div>
+    <h1> Inventory Mananegement System</h1>
+    <p class="lead">Request login credentials from headquarters, incase of any issue, feel free to contact the developer or the website administrator</p>
+    </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script></body>

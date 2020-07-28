@@ -90,17 +90,25 @@ th {
         <li class="nav-item active">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="/list_items">Current Stock</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/add_items">Add Stock</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/list_history">List History</a>
+         </li>
+          {% endif %}
     </ul>
-    <form class="form-inline mt-2 mt-md-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <ul class="navbar-nav">
+      {% if request.user.is_authenticated %}
+      <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
+      {% else %}
+      <li><a href="/accounts/login">Login</a></li>
+      {% endif %}
+  </ul>
   </div>
 </nav>
 
@@ -115,8 +123,8 @@ th {
   <div class="jumbotron">
       <div class="header">{{header}}</div>
      
-    <a href='#issue'><div class='btn btn-danger'>ISSUE THIS ITEM</div></a>
-    <a href='#receive'><div class='btn btn-primary'>RECEIVE THIS ITEM</div></a>
+      <a href="{% url 'issue_items' queryset.id %}"><div class='btn btn-danger'>ISSUE THIS ITEM</div></a>
+      <a href="{% url 'receive_items' queryset.id %}"><div class='btn btn-primary'>RECEIVE THIS ITEM</div></a>
             <br><br>
             <div class="display_table">
               <table class='table'>

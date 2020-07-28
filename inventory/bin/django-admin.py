@@ -1,5 +1,4 @@
-#!/home/paulsaul/Python/Django/inventory management system/inventory/bin/python3
-from django.core import management
-
-if __name__ == "__main__":
-    management.execute_from_command_line()
+#!"/home/paulsaul/Python/Django/inventory management system/inventory/bin/python"
+# EASY-INSTALL-SCRIPT: 'Django==1.11.29','django-admin.py'
+__requires__ = 'Django==1.11.29'
+__import__('pkg_resources').run_script('Django==1.11.29', 'django-admin.py')

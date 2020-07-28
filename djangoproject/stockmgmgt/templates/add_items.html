@@ -30,6 +30,13 @@
           font-size: 3.5rem;
         }
       }
+      .display_table{
+    border-bottom-right-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 20px;
+    box-shadow: 12px 12px 20px 6px #2e6da4;
+}
     </style>
     <!-- Custom styles for this template -->
     <link href="navbar-top-fixed.css" rel="stylesheet">
@@ -46,27 +53,41 @@
         <li class="nav-item active">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="/list_items">Current Stock</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/add_items">Add Stock</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/list_history">List History</a>
+         </li>
+          {% endif %}
     </ul>
-    <form class="form-inline mt-2 mt-md-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <ul class="navbar-nav">
+      {% if request.user.is_authenticated %}
+      <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
+      {% else %}
+      <li><a href="/accounts/login">Login</a></li>
+      {% endif %}
+  </ul>
   </div>
 </nav>
 
 <main role="main" class="container">
   <div class="jumbotron">
     <h1> {{title}}</h1>
-    <form method="POST" action="">{% csrf_token %}
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="display-table" style="border-bottom-right-radius: 20px;padding-left: 5px; padding-right: 5px; padding-bottom: 20px; box-shadow: 12px 12px 15px #2e6da4;">
+          <form method="POST" action="">{% csrf_token %}
         {{form|crispy}}
-        <input type="submit" value="Save">
+        <input type="submit" class="btn btn-primary mybutton" value="Save">
     </form>
+        </div>
+    </div>
+    </div>
   </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
