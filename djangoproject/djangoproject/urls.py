@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from stockmgmgt import views
+from django.contrib import admin
+
+admin.site.site_header = "Wabcom"
+admin.site.index_template = "admin/custom_index.html"
+admin.site.enable_nav_sidebar = False
+admin.autodiscover()
 
 urlpatterns = [
     path('', views.home, name='home'),
