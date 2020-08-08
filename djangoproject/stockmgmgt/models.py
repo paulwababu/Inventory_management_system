@@ -6,6 +6,7 @@ class Stock(models.Model):
     category = models.CharField(max_length=50, blank=True, null=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
     quantity = models.IntegerField(default='0', blank=True, null=True)
+    price = models.IntegerField(default='0', blank=True, null=True)
     receive_quantity = models.IntegerField(default='0', blank=True, null=True)
     receive_by = models.CharField(max_length=50, blank=True, null=True)
     issue_quantity = models.IntegerField(default='0', blank=True, null=True)
@@ -19,7 +20,7 @@ class Stock(models.Model):
     export_to_CSV = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.item_name + ' ' + str(self.quantity)
+        return self.item_name + ' ' + str(self.quantity) + ' ' + str(self.price)
 
 class StockHistory(models.Model):
 	category = models.CharField(max_length=50, blank=True, null=True)

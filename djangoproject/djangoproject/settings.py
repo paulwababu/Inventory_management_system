@@ -25,7 +25,7 @@ SECRET_KEY = 'ybl=2jx86v8e5de(d6h^c2ulao5!%&7^^ax(4bkxbemq3x_@dc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '58c91fc94071.ngrok.io', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '58c91fc94071.ngrok.io', '34.70.97.31']
 
 
 # Application definition
@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'test',
-        'USER': 'root',
-        'PASSWORD': '443556126216621',
+        'USER': 'test_remote',
+        'PASSWORD': 'test_remote',
     }
 }
 

@@ -139,3 +139,7 @@ def list_history(request):
 		"queryset": queryset,
 	}
 	return render(request, "list_history.html",context)
+
+@login_required
+def report(request):
+	return render(request, "report-1.html")

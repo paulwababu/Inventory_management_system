@@ -33,6 +33,7 @@ urlpatterns = [
     path('issue_items/<str:pk>/', views.issue_items, name="issue_items"),
     path('receive_items/<str:pk>/', views.receive_items, name="receive_items"),
     path('list_history/', views.list_history, name='list_history'),
+    path('report/', views.report, name='report'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls')),
 ] 
