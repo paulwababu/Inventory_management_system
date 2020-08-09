@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from datetime import date
 from django.db.models import Sum
+import json
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -176,5 +178,9 @@ def list_history(request):
 @login_required
 def report(request):
     data =Transaction.objects.values('item_name').annotate(Sum('transaction_amount'))
+    categories = [items["item_name"] for items in data]
+    user_count = User.objects.all().count()
+    prices = [items["transaction_amount__sum"] for items in data]
+    total_sales = sum(prices)
     
-    return render(request, "report-1.html", {'data':data})
+    return render(request, "report-1.html", {'categories':json.dumps(categories), 'prices':json.dumps(prices), 'user_count':json.dumps(user_count),'total_sales':json.dumps(total_sales) })

@@ -150,15 +150,14 @@
 						<div class="info-box">
 							<div class="row-fluid stats-box ">
 								<div class="span">
-									<div class="stats-box-title">Users</div>
+									<div class="stats-box-title">System Users</div>
 									<div class="stats-box-all-info"><i class="icon-user" style="color:#3366cc;"></i>
-										{% for items in data %} {{ items.item_name  }}
-										{% endfor %}</div>
+										{{ user_count }} </div>
 								</div>
 								<div class="span">
-									<div class="stats-box-title">Transactions</div>
+									<div class="stats-box-title">Total Sales</div>
 									<div class="stats-box-all-info"><i class="icon-thumbs-up" style="color:#F30"></i>
-										66.66</div>
+										{{ total_sales}}</div>
 									<div class="wrap-chart">
 										<div id="order-stat" class="chart" style="padding: 0px; position: relative;">
 											<canvas id="bar-chart2" class="chart-holder" height="150"
@@ -173,23 +172,25 @@
 								</div>
 							</div>
 						</div>
-						<div class="mb-3" id="container" style="width: 100%;">
 
+						<div class="mb-3" id="container" style="width: 100%;">
+							<p> {{ prices }}</p>
 							<script src="https://code.highcharts.com/highcharts.src.js"></script>
 							<script>
+
 								Highcharts.chart('container', {
 									chart: {
 										type: 'column'
 									},
 									title: {
-										text: 'Historic World Population by Region'
+										text: 'Total transactions for items'
 									},
 									xAxis: {
-										categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania']
-									},
+										categories: {{ categories| safe }}
+								},
 									series: [{
 										name: 'Year 1800',
-										data: [107, 31, 635, 203, 2]
+										data: {{ prices }}
 									},]
 								});
 							</script>
