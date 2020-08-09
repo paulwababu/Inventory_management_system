@@ -36,3 +36,9 @@ class StockHistory(models.Model):
 	reorder_level = models.IntegerField(default='0', blank=True, null=True)
 	last_updated = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)
 	timestamp = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)        
+class Transaction(models.Model):
+    employee_name = models.CharField(max_length=50, blank=False)
+    transaction_type = models.CharField(max_length=50, blank=False)
+    transaction_amount = models.IntegerField(default='0', blank=False)
+    timestamp = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)        
+    item_name = models.CharField(max_length=50)
