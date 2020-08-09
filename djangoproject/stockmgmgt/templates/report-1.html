@@ -22,6 +22,8 @@
 
 	<link href="{% static 'css/reports.css' %}" rel="stylesheet">
 
+	<script src="https://code.highcharts.com/highcharts.src.js"></script>
+
 	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -146,31 +148,15 @@
 					<div class="span12">
 
 						<div class="info-box">
-							<div class="row-fluid stats-box">
-								<div class="span4">
-									<div class="stats-box-title">Vizitor</div>
+							<div class="row-fluid stats-box ">
+								<div class="span">
+									<div class="stats-box-title">Users</div>
 									<div class="stats-box-all-info"><i class="icon-user" style="color:#3366cc;"></i>
-										555K</div>
-									<!-- <div class="wrap-chart">
-										<div id="visitor-stat" class="chart" style="padding: 0px; position: relative;">
-											<canvas id="bar-chart1" class="chart-holder" height="150"
-												width="325"></canvas></div>
-									</div> -->
-									{% chart %}
-									chxr=0,0,10000
-									chxt=y
-									chbh=a
-									chs=640x320
-									cht=bvs
-									chco=4D89F9
-									chds=0,160
-									chd=t:10,50,60,80,40,60,30
-									chtt=Horizontal+bar+chart
-									{% endchart %}
+										{% for items in data %} {{ items.item_name  }}
+										{% endfor %}</div>
 								</div>
-
-								<div class="span4">
-									<div class="stats-box-title">Likes</div>
+								<div class="span">
+									<div class="stats-box-title">Transactions</div>
 									<div class="stats-box-all-info"><i class="icon-thumbs-up" style="color:#F30"></i>
 										66.66</div>
 									<div class="wrap-chart">
@@ -180,80 +166,87 @@
 									</div>
 								</div>
 
-								<div class="span4">
-									<div class="stats-box-title">Orders</div>
+								<div class="span">
+									<div class="stats-box-title">Total Amount</div>
 									<div class="stats-box-all-info"><i class="icon-shopping-cart"
 											style="color:#3C3"></i> 15.55</div>
-									<div class="wrap-chart">
-
-										<div id="user-stat" class="chart" style="padding: 0px; position: relative;">
-											<canvas id="bar-chart3" class="chart-holder" height="150"
-												width="325"></canvas></div>
-
-									</div>
 								</div>
 							</div>
-
-
 						</div>
+						<div class="mb-3" id="container" style="width: 100%;">
 
-
+							<script src="https://code.highcharts.com/highcharts.src.js"></script>
+							<script>
+								Highcharts.chart('container', {
+									chart: {
+										type: 'column'
+									},
+									title: {
+										text: 'Historic World Population by Region'
+									},
+									xAxis: {
+										categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania']
+									},
+									series: [{
+										name: 'Year 1800',
+										data: [107, 31, 635, 203, 2]
+									},]
+								});
+							</script>
+						</div>
 					</div>
+
 				</div>
 
-				<!-- /row -->
 
-				<div class="row">
+			</div>
+		</div>
 
-					<div class="span6">
+		<!-- /row -->
 
-						<div class="widget">
+		<div class="row">
 
-							<div class="widget-header">
-								<i class="icon-star"></i>
-								<h3>Some Stats</h3>
-							</div> <!-- /widget-header -->
+			<div class="span6 col-md-12">
 
-							<div class="widget-content">
-								<canvas id="pie-chart" class="chart-holder" height="250" width="538"></canvas>
-							</div> <!-- /widget-content -->
+				<div class="widget">
 
-						</div> <!-- /widget -->
+					<div class="widget-header">
+						<i class="icon-star"></i>
+						<h3>Some Stats</h3>
+					</div> <!-- /widget-header -->
 
+					<div class="widget-content">
+						<canvas id="pie-chart" class="chart-holder" height="250" width="538"></canvas>
+					</div> <!-- /widget-content -->
 
-
-
-					</div> <!-- /span6 -->
-
-
-					<div class="span6">
-
-						<div class="widget">
-
-							<div class="widget-header">
-								<i class="icon-list-alt"></i>
-								<h3>Another Chart</h3>
-							</div> <!-- /widget-header -->
-
-							<div class="widget-content">
-								<canvas id="bar-chart" class="chart-holder" height="250" width="538"></canvas>
-							</div> <!-- /widget-content -->
-
-						</div> <!-- /widget -->
-
-					</div> <!-- /span6 -->
-
-				</div> <!-- /row -->
+				</div> <!-- /widget -->
 
 
 
 
+			</div> <!-- /span6 -->
 
 
+			<div class="span6">
 
-			</div> <!-- /container -->
+				<div class="widget">
 
-		</div> <!-- /main-inner -->
+					<div class="widget-header">
+						<i class="icon-list-alt"></i>
+						<h3>Another Chart</h3>
+					</div> <!-- /widget-header -->
+				</div>
+
+			</div> <!-- /widget -->
+
+		</div> <!-- /span6 -->
+
+	</div> <!-- /row -->
+
+
+	</div> <!-- /container -->
+
+	</div> <!-- /main-inner -->
 
 	</div> <!-- /main -->
 
@@ -271,7 +264,8 @@
 						<h4>
 							About</h4>
 						<ul>
-							<li><a href="https://github.com/paulwababu/Inventory_management_system">Github Project</a>
+							<li><a href="https://github.com/paulwababu/Inventory_management_system">Github
+									Project</a>
 							</li>
 						</ul>
 					</div>

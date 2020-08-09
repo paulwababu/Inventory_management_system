@@ -13,6 +13,7 @@ from .forms import (
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from datetime import date
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -153,12 +154,12 @@ def receive_items(request, pk):
 
         return redirect("/stock_detail/" + str(instance.id))
         # return HttpResponseRedirect(instance.get_absolute_url())
-        context = {
-            "title": "Reaceive " + str(queryset.item_name),
-            "instance": queryset,
-            "form": form,
-            "username": "Receive By: " + str(request.user),
-        }
+    context = {
+        "title": "Reaceive " + str(queryset.item_name),
+        "instance": queryset,
+        "form": form,
+        "username": "Receive By: " + str(request.user),
+    }
     return render(request, "add_items.html", context)
 
 
@@ -174,4 +175,6 @@ def list_history(request):
 
 @login_required
 def report(request):
-	return render(request, "report-1.html")
+    data =Transaction.objects.values('item_name').annotate(Sum('transaction_amount'))
+    
+    return render(request, "report-1.html", {'data':data})
