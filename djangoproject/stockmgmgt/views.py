@@ -5,6 +5,11 @@ import csv
 from .models import *
 from .forms import StockCreateForm, StockSearchForm, StockUpdateForm, IssueForm, ReceiveForm
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from datetime import date
+from django.db.models import Sum
+import json
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -110,25 +115,31 @@ def issue_items(request, pk):
 
 @login_required
 def receive_items(request, pk):
-	queryset = Stock.objects.get(id=pk)
-	form = ReceiveForm(request.POST or None, instance=queryset)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		instance.receive_quantity = 0
-		instance.quantity += instance.receive_quantity
-		instance.save()
-		messages.success(request, "Received SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name)+"s now in Store")
+    queryset = Stock.objects.get(id=pk)
+    form = ReceiveForm(request.POST or None, instance=queryset)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.receive_quantity = 0
+        instance.quantity += instance.receive_quantity
+        instance.save()
+        messages.success(
+            request,
+            "Received SUCCESSFULLY. "
+            + str(instance.quantity)
+            + " "
+            + str(instance.item_name)
+            + "s now in Store",
+        )
 
-		return redirect('/stock_detail/'+str(instance.id))
-		# return HttpResponseRedirect(instance.get_absolute_url())
-	context = {
-			"title": 'Reaceive ' + str(queryset.item_name),
-			"instance": queryset,
-			"form": form,
-			"username": 'Receive By: ' + str(request.user),
-		}
-	return render(request, "add_items.html", context)
-
+        return redirect("/stock_detail/" + str(instance.id))
+        # return HttpResponseRedirect(instance.get_absolute_url())
+    context = {
+        "title": "Reaceive " + str(queryset.item_name),
+        "instance": queryset,
+        "form": form,
+        "username": "Receive By: " + str(request.user),
+    }
+    return render(request, "add_items.html", context)
 
 @login_required
 def list_history(request):
@@ -142,4 +153,10 @@ def list_history(request):
 
 @login_required
 def report(request):
-	return render(request, "report-1.html")
+    data =Transaction.objects.values('item_name').annotate(Sum('transaction_amount'))
+    categories = [items["item_name"] for items in data]
+    user_count = User.objects.all().count()
+    prices = [items["transaction_amount__sum"] for items in data]
+    total_sales = sum(prices)
+    
+    return render(request, "report-1.html", {'categories':json.dumps(categories), 'prices':json.dumps(prices), 'user_count':json.dumps(user_count),'total_sales':json.dumps(total_sales) })
