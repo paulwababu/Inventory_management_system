@@ -90,27 +90,42 @@ def stock_detail(request, pk):
 
 
 @login_required
+@login_required
 def issue_items(request, pk):
-	queryset = Stock.objects.get(id=pk)
-	form = IssueForm(request.POST or None, instance=queryset)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		instance.receive_quantity = 0
-		instance.quantity -= instance.issue_quantity
-		#instance.issue_by = str(request.user)
-		messages.success(request, "Issued SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now left in Store")
-		instance.save()
+    queryset = Stock.objects.get(id=pk)
 
-		return redirect('/stock_detail/'+str(instance.id))
-		# return HttpResponseRedirect(instance.get_absolute_url())
-
-	context = {
-		"title": 'Issue ' + str(queryset.item_name),
-		"queryset": queryset,
-		"form": form,
-		"username": 'Issue By: ' + str(request.user),
+    form = IssueForm(request.POST or None, instance=queryset)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.receive_quantity = 0
+        instance.quantity -= instance.issue_quantity
+        instance.issue_by = str(request.user)
+        messages.success(
+            request,
+            "Issued SUCCESSFULLY. "
+            + str(instance.quantity)
+            + " "
+            + str(instance.item_name)
+            + "s now left in Store",
+        )
+        instance.save()
+        sell_transaction = Transaction(
+            employee_name= request.user.username,
+            transaction_type= "selling",
+            transaction_amount= instance.price * instance.issue_quantity,
+            timestamp= date.today(),
+            item_name= instance.item_name,
+        )
+        sell_transaction.save()
+        return redirect("/stock_detail/" + str(instance.id))
+    context = {
+        "title": "Issue " + str(queryset.item_name),
+        "queryset": queryset,
+        "form": form,
+        "username": "Issue By: " + str(request.user),
 	}
-	return render(request, "add_items.html", context)
+    return render(request, "add_items.html", context)
+
 
 
 @login_required
@@ -158,5 +173,5 @@ def report(request):
     user_count = User.objects.all().count()
     prices = [items["transaction_amount__sum"] for items in data]
     total_sales = sum(prices)
-    
+    print(data, categories, prices)
     return render(request, "report-1.html", {'categories':json.dumps(categories), 'prices':json.dumps(prices), 'user_count':json.dumps(user_count),'total_sales':json.dumps(total_sales) })
