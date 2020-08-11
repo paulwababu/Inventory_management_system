@@ -1,107 +1,367 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="zxx">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Jekyll v4.0.1">
-  <title>Home</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/navbar-fixed/">
+        <!-- Bootstrap Min CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Animate Min CSS -->
+        <link rel="stylesheet" href="css/animate.min.css">
+        <!--  -->
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <!--  -->
+        <link rel="stylesheet" href="css/flaticon.html">
+        <!-- IcoFont Min CSS -->
+        <link rel="stylesheet" href="css/icofont.min.css">
+        <!-- Owl Carousel Min CSS -->
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <!-- default CSS -->
+        <link rel="stylesheet" href="css/default.css">
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="css/styles.css">
 
-  <!-- Bootstrap core CSS -->
+        <title>Wabcom Technologies Limited</title>
+    </head>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <body data-spy="scroll" data-offset="70">
+        
+        <!-- Navbar Area -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#" target="_blank"><img src="img/logo.png" alt="logo"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser == True %}
+                        <li class="nav-item"><a class="nav-link" href="/list_items">Current Stock</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/add_items">Add Stock</a></li>
+                        <li class="nav-item"><a class="nav-link  text-black " href="/admin/auth/user"><strong>Add Users</strong></a></li>
+                        <li class="nav-item"><a class="nav-link " href="/report">Reports</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="/list_items">Current Stock</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/add_items">Add Stock</a></li>
+                        {% endif %}
+                        {% endif %}
+                    </ul>
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
+                    <div class="others-options">
+                        {% if request.user.is_authenticated %}
+                        <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
+                        {% else %}
+                        <li><a href="/accounts/login" class="btn btn-primary" style="text-transform: uppercase;">Login</a></li>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
 
-    body {
-      min-height: 75rem;
-      padding-top: 4.5rem;
-    }
-  </style>
-  <!-- Custom styles for this template -->
+        <!-- Main Banner -->
+        <div id="home" class="main-banner bg_cover" style="background-image: url(img/slider-1.jpg)">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="main-banner-content">
+                            <h3>
+                                <a href="#" class="typewrite" data-period="2000" data-type='[ "2 Homepage Variations.", "Built with Sass.", "Built On Bootstrap.", "W3 Valid.", "Easily Customizable.", "Fully Responsive Layout.", "Slick Slider.", "Developer Friendly.", "Well Documented.", "Magnific Popup." ]'>
+                                    <span class="wrap"></span>
+                                </a>
+                            </h3>
+                            <h1>Zxpos - Retail <br> Point of Sale System <br> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-</head>
+            <div id="particles-js"></div>
+        </div>
+        <!-- End Main Banner -->
 
-<body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top bg-dark">
-    <a class="navbar-brand" href="/">WABCOM</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
-        {% if request.user.is_authenticated %}
-        {% if request.user.is_superuser == True %}
-        <li class="nav-item">
-          <a class="nav-link" href="/list_items">Current Stock</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/add_items">Add Stock</a>
-        </li>
-        <li class="nav-item btn btn-outline-warning waves-effect  ml-3 mr-2 black">
-          <a class="nav-link  text-black " href="/admin/auth/user"><strong>Add Users</strong></a>
-        </li>
-        <li class="nav-item btn btn-outline-warning waves-effect  ml-2 mr-2">
-          <a class="nav-link " href="/report">Reports</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="/list_items">Current Stock</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/add_items">Add Stock</a>
-        </li>
-        {% endif %}
-        {% endif %}
-      </ul>
-      <ul class="navbar-nav">
-        {% if request.user.is_authenticated %}
-        <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
-        {% else %}
-        <li><a href="/accounts/login" class="btn btn-primary" style="text-transform: uppercase;">Login</a></li>
-        {% endif %}
-      </ul>
+       
+
+        <!-- Features Area -->
+        <div id="features" class="features-area">
+            <div class="container">                
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="section-title text-center pb-50">
+                            <h3 class="title">Our Awesome  <span>#Features</span></h3>
+                            <ul>
+                                <li>Built with Sass</li>
+                                <li>Friendly Support</li>
+                                <li>Powerful Design</li>
+                            </ul>
+                        </div> <!-- section title -->
+                    </div>
+                </div> <!-- row -->
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/sass.png" alt="image">
+
+                            <h3>Built with Sass</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/bootstrap.png" alt="image">
+
+                            <h3>Built On Bootstrap(4.x)</h3>
+                        </div>
+                    </div>
+					
+					<div class="col-lg-4 col-md-6">
+						<div class="single-features">
+							<img src="img/contact.png" alt="img">
+							<h3>AJAX contact form</h3>
+						</div>
+					</div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/slick.png" alt="image">
+
+                            <h3>Slick Slider</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/magnific.png" alt="image">
+
+                            <h3>Magnific Popup</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/w3c.png" alt="image">
+
+                            <h3>Valid HTML5 & CSS3 Code</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/retina.png" alt="image">
+
+                            <h3>Clean And Professional Codes</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/reponsive.png" alt="image">
+
+                            <h3>Fully Responsive Layouts</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/font.png" alt="image">
+
+                            <h3>Free Google font and Icon Used</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/browser.png" alt="image">
+
+                            <h3>Browser Compatibility</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/wrench.png" alt="image">
+
+                            <h3>Easy to customize</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/retina.png" alt="image">
+
+                            <h3>Retina Ready</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/developer.png" alt="image">
+
+                            <h3>Developer Friendly</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/support.png" alt="image">
+
+                            <h3>Quick Support</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/thumbs.png" alt="image">
+
+                            <h3>Free Lifetime Updates</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="img/document.png" alt="image">
+
+                            <h3>Well documented</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Features Area -->
+
+        
+
+        <!-- Start You May Also Like -->
+        <section class="you-may-also-like">
+    <div class="container">
+        <div class="bdrop-section-title pb-80">
+            <h3 class="main-title">You May Also Like</h3>
+        </div> <!-- section title -->
     </div>
-  </nav>
 
-  <main role="main" class="container">
-    <div class="jumbotron">
-      <h1> Inventory Mananegement System</h1>
-      <p class="lead">Request login credentials from headquarters, incase of any issue, feel free to contact the
-        developer or the website administrator</p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="like-slides owl-carousel owl-theme">
+                <div class="col-lg-12 col-md-12">
+                    <div class="single-slide-demo">
+                        <div class="img">
+                            <img src="img/pos.jpg" alt="image">
+
+                            <div class="link-btn">
+                                <a href="https://1.envato.market/QQzd3" target="_blank"><i class="icofont-link"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <h3><a href="https://1.envato.market/QQzd3" target="_blank">Zxpos - Sass Retail & Restaurant Point of Sale Landing Page HTML Template</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="single-slide-demo">
+                        <div class="img">
+                            <img src="img/xlaila.jpg" alt="image">
+
+                            <div class="link-btn">
+                                <a href="https://themeforest.net/item/xlaila-blog-magazine-bootstrap-4-template/23489802" target="_blank"><i class="icofont-link"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <h3><a href="https://themeforest.net/item/xlaila-blog-magazine-bootstrap-4-template/23489802" target="_blank">Xlaila - Blog & Magazine Bootstrap 4 Template</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="single-slide-demo">
+                        <div class="img">
+                            <img src="img/konok.jpg" alt="image">
+
+                            <div class="link-btn">
+                                <a href="https://1.envato.market/5Nx4L" target="_blank"><i class="icofont-link"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <h3><a href="https://1.envato.market/5Nx4L" target="_blank">Konok - Architecture & Interior Bootstrap4 HTML Template</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="single-slide-demo">
+                        <div class="img">
+                            <img src="img/fresh.jpg" alt="image">
+
+                            <div class="link-btn">
+                                <a href="https://1.envato.market/rPB53" target="_blank"><i class="icofont-link"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <h3><a href="https://1.envato.market/rPB53" target="_blank">Fresh Vial - Drinking Mineral Water Delivery Bootstrap4 HTML Template</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="single-slide-demo">
+                        <div class="img">
+                            <img src="img/bkoni.jpg" alt="image">
+
+                            <div class="link-btn">
+                                <a href="https://themeforest.net/item/bkoni-multipurpose-minimal-ecommerce-psd-template/23898562" target="_blank"><i class="icofont-link"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <h3><a href="https://themeforest.net/item/bkoni-multipurpose-minimal-ecommerce-psd-template/23898562" target="_blank">Bkoni - Multipurpose minimal e-Commerce PSD Template</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="single-slide-demo">
+                        <div class="img">
+                            <img src="img/avesta.jpg" alt="image">
+
+                            <div class="link-btn">
+                                <a href="https://themeforest.net/item/avesta-ecommerce-html-template/23821647" target="_blank"><i class="icofont-link"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <h3><a href="https://themeforest.net/item/avesta-ecommerce-html-template/23821647" target="_blank">Avesta - eCommerce HTML Template</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </main>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-  <script src="/docs/4.5/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"
-    crossorigin="anonymous"></script>
-</body>
+</section>        <!-- End You May Also Like -->
+        
+        <!-- Jquery Min JS -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Popper Min JS -->
+        <script src="js/popper.min.js"></script>
+        <!-- Bootstrap Min JS -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Particles Min JS -->
+        <script src="js/particles.min.js"></script>
+        <!-- Owl Carousel Min JS -->
+        <script src="js/owl.carousel.min.js"></script>
+        <!-- Main JS -->
+        <script src="js/main.js"></script>
+    </body>
+
 
 </html>
