@@ -69,7 +69,7 @@
         {% if request.user.is_authenticated %}
         <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
         {% else %}
-        <li><a href="/accounts/login" class="btn btn-primary" style="text-transform: uppercase;">Login</a></li>
+        <li><a href="/accounts/login" class="btn btn-success" style="text-transform: uppercase;">Login</a></li>
         {% endif %}
       </ul>
     </div>
