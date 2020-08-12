@@ -26,7 +26,26 @@
         <!-- Favicon -->
 	<link rel="shortcut icon" href="{% static 'img/favicon.icon' %}" type="image/x-icon">
         <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-	
+	<style>  /* unvisited link */
+a:link {
+  color: green;
+}
+
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: red;
+}
+
+/* selected link */
+a:active {
+  color: yellow;
+} 
+	</style>
         <title>Wabcom Technologies Limited</title>
     </head>
 
@@ -34,7 +53,7 @@
         
          <!-- Navbar Area -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">WABCOM</a>
+    <a class="navbar-brand hover" href="/">WABCOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
       aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
