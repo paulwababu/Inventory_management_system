@@ -83,6 +83,7 @@ DATABASES = {
         'NAME': 'inventory',
         'USER': 'huncho',
         'PASSWORD': 'c11h28no3',
+
     }
 }
 

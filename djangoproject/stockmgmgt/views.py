@@ -3,13 +3,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 import csv
 from .models import *
-from .forms import (
-    StockCreateForm,
-    StockSearchForm,
-    StockUpdateForm,
-    IssueForm,
-    ReceiveForm,
-)
+from .forms import StockCreateForm, StockSearchForm, StockUpdateForm, IssueForm, ReceiveForm
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from datetime import date
@@ -20,7 +14,7 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
-    title = "welcome to our homepage"
+    title = 'welcome to our homepage'
     form = "welcome"
     context = {
         "title": title,
@@ -28,10 +22,9 @@ def home(request):
     }
     return render(request, "home.html", context)
 
-
 @login_required
 def list_items(request):
-    header = "LIST OF ITEMS"
+    header = 'LIST OF ITEMS'
     form = StockSearchForm(request.POST or None)
     queryset = Stock.objects.all()
     context = {
@@ -53,54 +46,52 @@ def list_items(request):
             "pk_list":0,
         }
     return render(request, "list_items.html",  context  )
-
-
 @login_required
 def add_items(request):
     form = StockCreateForm(request.POST or None)
     if form.is_valid():
         form.save()
-        messages.success(request, "Successfully Saved")
-        return redirect("/list_items")
+        messages.success(request, 'Successfully Saved')
+        return redirect('/list_items')
     context = {
         "form": form,
         "title": "Add Item",
     }
-    return render(request, "add_items.html", context)
-
+    return render(request, "add_items.html", context)    
 
 @login_required
 def update_items(request, pk):
-    queryset = Stock.objects.get(id=pk)
-    form = StockUpdateForm(instance=queryset)
-    if request.method == "POST":
-        form = StockUpdateForm(request.POST, instance=queryset)
-        if form.is_valid():
-            form.save(), messages.success(request, "Successfully Updated")
-            return redirect("/list_items")
+	queryset = Stock.objects.get(id=pk)
+	form = StockUpdateForm(instance=queryset)
+	if request.method == 'POST':
+		form = StockUpdateForm(request.POST, instance=queryset)
+		if form.is_valid():
+			form.save(), messages.success(request, 'Successfully Updated')
+			return redirect('/list_items')
 
-    context = {"form": form}
-    return render(request, "add_items.html", context)
+	context = {
+		'form':form
+	}
+	return render(request, 'add_items.html', context)
+    
+@login_required	
+def delete_items(request, pk):
+    queryset = Stock.objects.get(id=pk)
+    if request.method == 'POST':
+        queryset.delete()
+        messages.success(request, 'Deleted Successfully')
+        return redirect('/list_items')
+    return render(request, 'delete_items.html')        
+
+def stock_detail(request, pk):
+	queryset = Stock.objects.get(id=pk)
+	context = {
+		"queryset": queryset,
+	}
+	return render(request, "stock_detail.html", context)
 
 
 @login_required
-def delete_items(request, pk):
-    queryset = Stock.objects.get(id=pk)
-    if request.method == "POST":
-        queryset.delete()
-        messages.success(request, "Deleted Successfully")
-        return redirect("/list_items")
-    return render(request, "delete_items.html")
-
-
-def stock_detail(request, pk):
-    queryset = Stock.objects.get(id=pk)
-    context = {
-        "queryset": queryset,
-    }
-    return render(request, "stock_detail.html", context)
-
-
 @login_required
 def issue_items(request, pk):
     pk_list =  [items for items in pk[1: -1]]
@@ -149,6 +140,7 @@ def issue_items(request, pk):
     return render(request, "add_items.html", context)
 
 
+
 @login_required
 def receive_items(request, pk):
     queryset = Stock.objects.get(id=pk)
@@ -177,16 +169,15 @@ def receive_items(request, pk):
     }
     return render(request, "add_items.html", context)
 
-
 @login_required
 def list_history(request):
-    header = "LIST OF ITEMS"
-    queryset = StockHistory.objects.all()
-    context = {
-        "header": header,
-        "queryset": queryset,
-    }
-    return render(request, "list_history.html", context)
+	header = 'LIST OF ITEMS'
+	queryset = StockHistory.objects.all()
+	context = {
+		"header": header,
+		"queryset": queryset,
+	}
+	return render(request, "list_history.html",context)
 
 @login_required
 def report(request):
@@ -195,7 +186,7 @@ def report(request):
     user_count = User.objects.all().count()
     prices = [items["transaction_amount__sum"] for items in data]
     total_sales = sum(prices)
-    
+    print(data, categories, prices)
     return render(request, "report-1.html", {'categories':json.dumps(categories), 'prices':json.dumps(prices), 'user_count':json.dumps(user_count),'total_sales':json.dumps(total_sales) })
 
 @login_required
