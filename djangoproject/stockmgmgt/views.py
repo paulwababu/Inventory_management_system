@@ -10,7 +10,7 @@ from datetime import date
 from django.db.models import Sum
 import json
 from django.contrib.auth.models import User
-
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -31,19 +31,21 @@ def list_items(request):
         "header": header,
         "queryset": queryset,
         "form": form,
+        "pk_list":0,
     }
-    if request.method == 'POST':
-	    queryset = Stock.objects.filter(category__icontains=form['category'].value(),
-								   item_name__icontains=form['item_name'].value()
-									)
-                                    
-	    context = {
-	    "form": form,
-	    "header": header,
-	    "queryset": queryset,
-}
-    return render(request, "list_items.html", context)
+    if request.method == "POST":
+        queryset = Stock.objects.filter(
+            category__icontains=form["category"].value(),
+            item_name__icontains=form["item_name"].value(),
+        )
 
+        context = {
+            "form": form,
+            "header": header,
+            "queryset": queryset,
+            "pk_list":0,
+        }
+    return render(request, "list_items.html",  context  )
 @login_required
 def add_items(request):
     form = StockCreateForm(request.POST or None)
@@ -92,12 +94,20 @@ def stock_detail(request, pk):
 @login_required
 @login_required
 def issue_items(request, pk):
-    queryset = Stock.objects.get(id=pk)
-
-    form = IssueForm(request.POST or None, instance=queryset)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.receive_quantity = 0
+    pk_list =  [items for items in pk[1: -1]]
+    clean_list = []
+    unwanted_list = []
+    for items in pk_list:
+        if items > '0':
+            clean_list.append(items)
+        else:
+            unwanted_list.append(items)
+          
+    for items in clean_list:
+        # import ipdb; ipdb.set_trace()
+        queryset = Stock.objects.get(id=int(items))
+        instance = queryset    
+        instance.issue_quantity = 1
         instance.quantity -= instance.issue_quantity
         instance.issue_by = str(request.user)
         messages.success(
@@ -117,13 +127,16 @@ def issue_items(request, pk):
             item_name= instance.item_name,
         )
         sell_transaction.save()
-        return redirect("/stock_detail/" + str(instance.id))
+        # import ipdb; ipdb.set_trace()
+        order = Order.objects.get(id_id=items)
+        order.delete()
+    return redirect("/list_items/")
     context = {
         "title": "Issue " + str(queryset.item_name),
         "queryset": queryset,
         "form": form,
         "username": "Issue By: " + str(request.user),
-	}
+    }
     return render(request, "add_items.html", context)
 
 
@@ -175,3 +188,18 @@ def report(request):
     total_sales = sum(prices)
     print(data, categories, prices)
     return render(request, "report-1.html", {'categories':json.dumps(categories), 'prices':json.dumps(prices), 'user_count':json.dumps(user_count),'total_sales':json.dumps(total_sales) })
+
+@login_required
+def add_to_cart(request, pk):
+    employee_name = request.user.username
+    Product = Stock.objects.filter(pk=pk)
+    price = Product.get().price
+    product_name = Product.get().item_name
+    order_item = Order.objects.get_or_create(id=Stock.objects.get(id=pk),employee_name=employee_name, product_name=product_name, price=price, is_complete=False)
+    order_query = Order.objects.filter(employee_name=employee_name, is_complete=0)
+    order_list = [items for items in order_query.values()]
+    queryset = Stock.objects.all()
+    pk_list = [items["id_id"] for items in order_list]
+
+    messages.info(request, f"item added to cart ")
+    return render(request, "list_items.html", { 'order_list':order_list, 'queryset':queryset, 'pk_list':pk_list })
