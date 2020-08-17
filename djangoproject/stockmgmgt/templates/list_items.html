@@ -2,146 +2,240 @@
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.0.1">
-    <title>Home</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/navbar-fixed/">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v4.0.1">
+  <title>Home</title>
 
-    <!-- Bootstrap core CSS -->
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/navbar-fixed/">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+  <!-- Bootstrap core CSS -->
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
       }
+    }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
+    body {
+      min-height: 75rem;
+      padding-top: 4.5rem;
+    }
+
+    .table {
+      font-size: 13px;
+      text-align: center;
+      width: 95%;
+      margin: auto;
+    }
+
+    .table tr:nth-child(odd) {
+      background: #B8CAE4
+    }
+
+    .table tr:nth-child(even) {
+      background: #dae5f4
+    }
+
+    th {
+      background-color: #337ab7;
+      color: white;
+    }
+
+    .display_table {
+      border-bottom-right-radius: 20px;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-bottom: 20px;
+      box-shadow: 12px 12px 20px 6px #2e6da4;
+    }
+
+    .header {
+      font-family: helvetica;
+      color: #337ab7;
+      font-size: 50px;
+      text-align: center;
+      width: 100%;
+      text-shadow: 6px 6px 6px #c9c6c6;
+      display: block;
+      font-weight: bolder;
+    }
+
+    .success {
+      list-style: none;
+      background-color: #2e6da4;
+      color: white;
+      box-shadow: 12px 12px 12px #e61c66;
+      text-align: center;
+    }
+
+    .mybutton {
+      width: 100%;
+    }
+
+    table,
+    th,
+    td {
+      /* border: 1px solid black; */
+      border-collapse: collapse;
+      width: 100%;
+      text-align: justify;
+    }
+  </style>
+
+  <!-- Custom styles for this template -->
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script>
+    $(window).load(function () {
+
+
+      var table = document.getElementById("cart");
+      var rows = table.rows;
+      var total = 0;
+      var cell;
+      var column = 2;
+      // Assume first row is headers, adjust as required
+      // Assume last row is footer, addjust as required
+      for (var i = 1, iLen = rows.length - 1; i < iLen; i++) {
+        cell = rows[i].cells[column];
+        total += Number(cell.textContent || cell.innerText);
       }
-	    body {
-  min-height: 75rem;
-  padding-top: 4.5rem;
-}
-    </style>
-    <style>
-        .table{
-            font-size: 13px;
-            text-align: center;
-            width: 95%;
-            margin: auto;
-        }
-        .table tr:nth-child(odd){
-	background: #B8CAE4
-}
+      document.getElementById("total").innerHTML = total.toFixed(2);
 
-.table tr:nth-child(even){
-	background: #dae5f4
-}
+    });
 
-th {
-  background-color: #337ab7;
-  color: white;
-}
-.display_table{
-    border-bottom-right-radius: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 20px;
-    box-shadow: 12px 12px 20px 6px #2e6da4;
-}
-.header {
-    font-family: helvetica;
-    color: #337ab7;
-    font-size: 50px;
-    text-align: center;
-    width: 100%;
-    text-shadow: 6px 6px 6px #c9c6c6;
-    display: block;
-    font-weight: bolder;
-}
-.success{
-     list-style: none;
-     background-color: #2e6da4;
-     color: white;
-     box-shadow: 12px 12px 12px #e61c66;
-     text-align: center;
- }
- .mybutton {
-   width: 100%;
- }
-    </style>
-    <!-- Custom styles for this template -->
-    
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <a class="navbar-brand" href="/">WABCOM</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
+
+
+
+
+
+  </script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">WABCOM</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="/list_items">Current Stock</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/add_items">Add Stock</a>
-          </li>
-          {% endif %}
-    </ul>
-    <ul class="navbar-nav">
-      {% if request.user.is_authenticated %}
-      <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
-      {% else %}
-      <li><a href="/accounts/login">Login</a></li>
-      {% endif %}
-  </ul>
-  </div>
-</nav>
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/list_items">Current Stock</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add_items">Add Stock</a>
+        </li>
+        {% endif %}
+      </ul>
+      <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
+        <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
+        {% else %}
+        <li><a href="/accounts/login">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
 
-<main role="main" class="container">
-  {% if messages %}
-  <ul class="messages">
-         {% for message in messages %}
-               <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-         {% endfor %}
- </ul>
-{% endif %}
-  <div class="jumbotron">
+  <main role="main" class="container">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="jumbotron">
       <div class="header">{{header}}</div>
       <div class="row">
-        <div class="col-sm-2">
-      <form method="POST" action="">{% csrf_token %}
-        {{form|crispy}}
-        <input class="btn btn-primary mybutton" type="submit" value="Search">
-    </form>
-    <br>
-    <br>
-    <a href="/add_items"><div class="btn btn-primary mybutton">Add Items</div></a><br><br>
-      <a href="/list_history"><div class="btn btn-primary mybutton">List History</div></a><br>
-    </div>
-    <br>
-      <div class="col-sm-10">
-      <div class="display_table" style="border-bottom-right-radius: 20px; padding-left: 5px; padding-right: 5px; padding-bottom: 20px; box-shadow: 12px 12px 20px 6px #2e6da4;">
-      <table class="table">
-          <thead>
-              <tr>
+        <div class="col-md-4">
+          <div class="col-md-12">
+
+            <div class="col-md-12 card mb-5">
+              <!-- shopping cart -->
+              <div class="card-header">
+                <h3>
+                  <badge class="badge badge-warning"><b>Items Cart</b></badge>
+                </h3>
+              </div>
+              <div class="card-body row">
+                <table id="cart">
+                  <tbody>
+
+                    <tr>
+                      <th><b>Product</b></th>
+                      <th><b>Quantity</b></th>
+                      <th><b>Prices (ksh)</b></th>
+                    </tr>
+                    {% for items in order_list %}
+                    <tr>
+                      <td>{{ items.product_name }} </td>
+                      <td> 1 </td>
+                      <td>
+                        <p>{{ items.price }}</p>
+                      </td>
+                    </tr>
+
+                    {% endfor %}
+                    <tr>
+                      <td></td>
+                      <td>Total</td>
+                      <td id=total>
+                    </tr>
+                  </tbody>
+                  <button class="btn btn-warning"><a href="{% url 'issue_items' pk_list %}">
+                      issue_items</button>
+                </table>
+              </div>
+              <hr>
+            </div>
+
+            <div class="col-md-6">
+              <form method="POST" action="">{% csrf_token %}
+                {{form|crispy}}
+                <input class=" btn btn-primary mybutton" type="submit" value="Search">
+              </form>
+              <br>
+              <br>
+              <a href="/add_items">
+                <div class="btn btn-primary mybutton">Add Items</div>
+              </a><br><br>
+              <a href="/list_history">
+                <div class="btn btn-primary mybutton">List History</div>
+              </a><br>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="col-sm-8">
+          <div class="display_table"
+            style="border-bottom-right-radius: 20px; padding-left: 5px; padding-right: 5px; padding-bottom: 20px; box-shadow: 12px 12px 20px 6px #2e6da4;">
+            <table class="table">
+              <thead>
+                <tr>
                   <th>COUNT</th>
                   <th>CATEGORY</th>
                   <th>ITEM NAME</th>
@@ -150,27 +244,35 @@ th {
                   <th>TIMESTAMP</th>
                   <th>LAST UPDATED</th>
                   <th>DELETE ITEMS</th>
+                </tr>
+              </thead>
+              {% for instance in queryset%}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{instance.category}}</td>
+                <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</a></td>
+                <td><a href="{% url 'add_to_cart' instance.id %}">{{instance.quantity}}</a></td>
+                <td>{{instance.price}}</td>
+                <td>{{instance.timestamp}}</td>
+                <td>{{instance.last_updated}}</td>
+                <td><a href="{% url 'delete_items' instance.id %}"><img
+                      src="https://img.icons8.com/color/28/000000/delete-sign.png" /></a></td>
               </tr>
-          </thead>
-          {% for instance in queryset%}
-          <tr>
-              <td>{{forloop.counter}}</td>
-              <td>{{instance.category}}</td>
-              <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</a></td>
-              <td><a href="{% url 'stock_detail' instance.id %}">{{instance.quantity}}</a></td>
-              <td>{{instance.price}}</td>
-              <td>{{instance.timestamp}}</td>
-              <td>{{instance.last_updated}}</td>
-              <td><a href="{% url 'delete_items' instance.id %}"><img src="https://img.icons8.com/color/28/000000/delete-sign.png"/></a></td>
-          </tr>
-          {% endfor %}
-      </table>
-  </div>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
       </div>
-      </div>
-  </div>
-  </div>
-</main>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script></body>
+    </div>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+  <script src="/docs/4.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
