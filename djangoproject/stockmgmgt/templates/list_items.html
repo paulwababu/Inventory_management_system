@@ -109,7 +109,7 @@
       var rows = table.rows;
       var total = 0;
       var cell;
-      var column = 2;
+      var column = 3;
       // Assume first row is headers, adjust as required
       // Assume last row is footer, addjust as required
       for (var i = 1, iLen = rows.length - 1; i < iLen; i++) {
@@ -174,7 +174,7 @@
         <div class="col-md-4">
           <div class="col-md-12">
 
-            <div class="col-md-12 card mb-5">
+            <div class="col-md-12 card mb-5 ">
               <!-- shopping cart -->
               <div class="card-header">
                 <h3>
@@ -186,12 +186,15 @@
                   <tbody>
 
                     <tr>
-                      <th><b>Product</b></th>
-                      <th><b>Quantity</b></th>
-                      <th><b>Prices (ksh)</b></th>
+                      <th><b><small>Remove</small></b></th>
+                      <th><b><small>Product</small></b></th>
+                      <th><b><small>Quantity</small></b></th>
+                      <th><b><small>Prices (ksh)</small></b></th>
                     </tr>
                     {% for items in order_list %}
                     <tr>
+                      <td><button class="btn btn-danger"><small><a
+                              href="{% url 'delete_from_cart' items.id_id %}">Delete</a></small></button></td>
                       <td>{{ items.product_name }} </td>
                       <td> 1 </td>
                       <td>
@@ -202,11 +205,12 @@
                     {% endfor %}
                     <tr>
                       <td></td>
+                      <td></td>
                       <td>Total</td>
                       <td id=total>
                     </tr>
                   </tbody>
-                  <button class="btn btn-warning"><a href="{% url 'issue_items' pk_list %}">
+                  <button class=" btn btn-warning"><a href="{% url 'issue_items' pk_list %}">
                       issue_items</button>
                 </table>
               </div>

@@ -203,3 +203,20 @@ def add_to_cart(request, pk):
 
     messages.info(request, f"item added to cart ")
     return render(request, "list_items.html", { 'order_list':order_list, 'queryset':queryset, 'pk_list':pk_list })
+
+@login_required
+def delete_from_cart(request, id):
+    Product = Order.objects.filter(id_id=id)
+    Product.delete()
+    employee_name = request.user.username
+    # import ipdb; ipdb.set_trace()
+    order_item = Order.objects.all()
+    order_query = Order.objects.filter(employee_name=employee_name, is_complete=0)
+    order_list = [items for items in order_query.values()]
+    queryset = Stock.objects.all()
+    pk_list = [items["id_id"] for items in order_list]
+
+
+    
+    messages.info(request, f"item added to cart ")
+    return render(request, "list_items.html", { 'order_list':order_list, 'queryset':queryset, 'pk_list':pk_list })
