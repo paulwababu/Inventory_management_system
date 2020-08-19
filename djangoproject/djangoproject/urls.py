@@ -36,4 +36,5 @@ urlpatterns = [
     path('report/', views.report, name='report'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls')),
+    path('add_to_cart/<str:pk>/', views.add_to_cart, name="add_to_cart")
 ] 

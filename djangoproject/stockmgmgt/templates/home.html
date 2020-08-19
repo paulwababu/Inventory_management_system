@@ -1,50 +1,59 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="zxx">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Jekyll v4.0.1">
-  <title>Home</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/navbar-fixed/">
+        <!-- Bootstrap Min CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.mins.css' %}">
+        <!-- Animate Min CSS -->
+        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+        <!--  -->
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+        <!--  -->
+        <link rel="stylesheet" href="{% static 'css/flaticon.html' %}">
+        <!-- IcoFont Min CSS -->
+        <link rel="stylesheet" href="{% static 'css/icofont.min.css' %}">
+        <!-- Owl Carousel Min CSS -->
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+        <!-- default CSS -->
+        <link rel="stylesheet" href="{% static 'css/default.css' %}">
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <!-- Favicon -->
+	<link rel="shortcut icon" href="{% static 'img/favicon.icon' %}" type="image/x-icon">
+        <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+	<style>  /* unvisited link */
+a:link {
+  color: green;
+}
 
-  <!-- Bootstrap core CSS -->
+/* visited link */
+a:visited {
+  color: green;
+}
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+/* mouse over link */
+a:hover {
+  color: red;
+}
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+/* selected link */
+a:active {
+  color: yellow;
+} 
+	</style>
+        <title>Wabcom Technologies Limited</title>
+    </head>
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-
-    body {
-      min-height: 75rem;
-      padding-top: 4.5rem;
-    }
-  </style>
-  <!-- Custom styles for this template -->
-
-</head>
-
-<body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top bg-dark">
-    <a class="navbar-brand" href="/">WABCOM</a>
+    <body data-spy="scroll" data-offset="70">
+        
+         <!-- Navbar Area -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand hover" href="/">WABCOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
       aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -52,7 +61,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/"> <span class="sr-only">(current)</span></a>
         </li>
         {% if request.user.is_authenticated %}
         {% if request.user.is_superuser == True %}
@@ -82,26 +91,202 @@
         {% if request.user.is_authenticated %}
         <li><a href="/accounts/logout"><button class="btn btn-danger">{{ user }} | Logout</button></a></li>
         {% else %}
-        <li><a href="/accounts/login" class="btn btn-primary" style="text-transform: uppercase;">Login</a></li>
+        <li><a href="/accounts/login" class="btn btn-success" style="text-transform: uppercase;">Login</a></li>
         {% endif %}
       </ul>
     </div>
   </nav>
 
-  <main role="main" class="container">
-    <div class="jumbotron">
-      <h1> Inventory Mananegement System</h1>
-      <p class="lead">Request login credentials from headquarters, incase of any issue, feel free to contact the
-        developer or the website administrator</p>
-    </div>
-  </main>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-  <script src="/docs/4.5/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"
-    crossorigin="anonymous"></script>
-</body>
+        <!-- End Navbar -->
+
+        <!-- Main Banner -->
+        <div id="home" class="main-banner bg_cover" style="background-image: url(https://raw.githubusercontent.com/paulwababu/Inventory_management_system/master/djangoproject/stockmgmgt/static/img/slider-1.jpg)">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="main-banner-content">
+                            <h3>
+                                <a href="#" class="typewrite" data-period="2000" data-type='[ "2 Homepage Variations.", "Built with Sass.", "Built On Bootstrap.", "W3 Valid.", "Easily Customizable.", "Fully Responsive Layout.", "Slick Slider.", "Developer Friendly.", "Well Documented.", "Magnific Popup." ]'>
+                                    <span class="wrap"></span>
+                                </a>
+                            </h3>
+                            <h1>Wabcom - Retail <br> Point of Sale System <br> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="particles-js"></div>
+        </div>
+        <!-- End Main Banner -->
+
+       
+
+        <!-- Features Area -->
+        <div id="features" class="features-area">
+            <div class="container">                
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="section-title text-center pb-50">
+                            <h3 class="title">Our Awesome  <span>#Features</span></h3>
+                            <ul>
+                                <li>Built with Sass</li>
+                                <li>Friendly Support</li>
+                                <li>Powerful Design</li>
+                            </ul>
+                        </div> <!-- section title -->
+                    </div>
+                </div> <!-- row -->
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/sass.png' %}" alt="image">
+
+                            <h3>Built with Sass</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/bootstrap.png' %}" alt="image">
+
+                            <h3>Built On Bootstrap(4.x)</h3>
+                        </div>
+                    </div>
+					
+					<div class="col-lg-4 col-md-6">
+						<div class="single-features">
+							<img src="{% static 'img/contact.png' %}" alt="img">
+							<h3>AJAX contact form</h3>
+						</div>
+					</div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/slick.png' %}" alt="image">
+
+                            <h3>Slick Slider</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/magnific.png' %}" alt="image">
+
+                            <h3>Magnific Popup</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/w3c.png' %}" alt="image">
+
+                            <h3>Valid HTML5 & CSS3 Code</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/retina.png' %}" alt="image">
+
+                            <h3>Clean And Professional Codes</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/reponsive.png' %}" alt="image">
+
+                            <h3>Fully Responsive Layouts</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/font.png' %}" alt="image">
+
+                            <h3>Free Google font and Icon Used</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/browser.png' %}" alt="image">
+
+                            <h3>Browser Compatibility</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/wrench.png' %}" alt="image">
+
+                            <h3>Easy to customize</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/retina.png' %}" alt="image">
+
+                            <h3>Retina Ready</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/developer.png' %}" alt="image">
+
+                            <h3>Developer Friendly</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/support.png' %}" alt="image">
+
+                            <h3>Quick Support</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/thumbs.png' %}" alt="image">
+
+                            <h3>Free Lifetime Updates</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-features">
+                            <img src="{% static 'img/document.png' %}" alt="image">
+
+                            <h3>Well documented</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Features Area -->
+
+        
+
+        
+        
+        <!-- Jquery Min JS -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <!-- Popper Min JS -->
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <!-- Bootstrap Min JS -->
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!-- Particles Min JS -->
+        <script src="{% static 'js/particles.min.js' %}"></script>
+        <!-- Owl Carousel Min JS -->
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <!-- Main JS -->
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+
 
 </html>
