@@ -119,12 +119,6 @@
       document.getElementById("total").innerHTML = total.toFixed(2);
 
     });
-
-
-
-
-
-
   </script>
 
 </head>
@@ -159,7 +153,6 @@
       </ul>
     </div>
   </nav>
-
   <main role="main" class="container">
     {% if messages %}
     <ul class="messages">
@@ -178,7 +171,7 @@
               <!-- shopping cart -->
               <div class="card-header">
                 <h3>
-                  <badge class="badge badge-warning"><b>Items Cart</b></badge>
+                  <badge class="badge badge-primary"><b>Items Cart</b></badge>
                 </h3>
               </div>
               <div class="card-body row">
@@ -196,10 +189,11 @@
                       <td><button class="btn btn-danger"><small><a
                               href="{% url 'delete_from_cart' items.id_id %}">Delete</a></small></button></td>
                       <td>{{ items.product_name }} </td>
-                      <td> 1 </td>
-                      <td>
-                        <p>{{ items.price }}</p>
-                      </td>
+                      <form method="POST" action="{% url 'issue_items' pk_list %}">{% csrf_token %}
+                        <td width="10px%"> {{ form.quantity  }} </td>
+                        <td>
+                          <p>{{ items.price }}</p>
+                        </td>
                     </tr>
 
                     {% endfor %}
@@ -210,8 +204,12 @@
                       <td id=total>
                     </tr>
                   </tbody>
-                  <button class=" btn btn-warning"><a href="{% url 'issue_items' pk_list %}">
-                      issue_items</button>
+                  <input type="submit" class="btn btn-warning " value="Issue items "><a href="{% url 'home' %"></a>
+                </form>
+                    <!-- <button class=" btn btn-warning" value="Submit"><a href="{% url 'issue_items' pk_list %}"> -->
+                    <!-- issue_items</button> -->
+
+                    </form>
                 </table>
               </div>
               <hr>

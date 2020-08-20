@@ -51,4 +51,6 @@ class Order(models.Model):
     product_name = models.CharField(max_length=50)
     price = models.IntegerField(default=0)
     is_complete = models.BooleanField(default=False)
-    
+
+class OrderQuantity(models.Model):
+    quantity = models.IntegerField(default='0', blank=True, null=True)

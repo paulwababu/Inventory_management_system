@@ -104,11 +104,11 @@ def issue_items(request, pk):
             unwanted_list.append(items)
           
     for items in clean_list:
-        # import ipdb; ipdb.set_trace()
+        
         queryset = Stock.objects.get(id=int(items))
         instance = queryset    
-        instance.issue_quantity = 1
-        instance.quantity -= instance.issue_quantity
+        instance.issue_quantity = request.POST["quantity"]
+        instance.quantity -= int(instance.issue_quantity)
         instance.issue_by = str(request.user)
         messages.success(
             request,
@@ -122,7 +122,7 @@ def issue_items(request, pk):
         sell_transaction = Transaction(
             employee_name= request.user.username,
             transaction_type= "selling",
-            transaction_amount= instance.price * instance.issue_quantity,
+            transaction_amount= instance.price * int(instance.issue_quantity),
             timestamp= date.today(),
             item_name= instance.item_name,
         )
@@ -130,6 +130,7 @@ def issue_items(request, pk):
         # import ipdb; ipdb.set_trace()
         order = Order.objects.get(id_id=items)
         order.delete()
+  
     return redirect("/list_items/")
     context = {
         "title": "Issue " + str(queryset.item_name),
@@ -191,6 +192,7 @@ def report(request):
 
 @login_required
 def add_to_cart(request, pk):
+    form = IssueForm()
     employee_name = request.user.username
     Product = Stock.objects.filter(pk=pk)
     price = Product.get().price
@@ -200,9 +202,11 @@ def add_to_cart(request, pk):
     order_list = [items for items in order_query.values()]
     queryset = Stock.objects.all()
     pk_list = [items["id_id"] for items in order_list]
-
+    context = {
+        "form": form,
+    }
     messages.info(request, f"item added to cart ")
-    return render(request, "list_items.html", { 'order_list':order_list, 'queryset':queryset, 'pk_list':pk_list })
+    return render(request, "list_items.html", { 'order_list':order_list, 'queryset':queryset, 'pk_list':pk_list, "form":form })
 
 @login_required
 def delete_from_cart(request, id):
