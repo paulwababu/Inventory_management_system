@@ -1,5 +1,5 @@
 from django import forms
-from .models import Stock
+from .models import Stock, OrderQuantity
 
 class StockCreateForm(forms.ModelForm):
     class Meta:
@@ -32,10 +32,16 @@ class StockUpdateForm(forms.ModelForm):
         model = Stock
         fields = ['category', 'item_name', 'quantity', 'price']
 
-class IssueForm(forms.ModelForm):
-	class Meta:
-		model = Stock
-		fields = ['issue_quantity', 'issue_to']
+class IssueForm(forms.Form):
+    quantity = forms.IntegerField(label='', min_value=1, widget=forms.NumberInput())
+    class Meta:
+        model = OrderQuantity
+        fields = 'quantity'
+    
+    # Edit by bryan
+    def __init__(self, *args, **kwargs):
+        super(IssueForm, self).__init__(*args, **kwargs) # Call to ModelForm constructor
+        self.fields['quantity'].widget.attrs['style'] = 'width:100%; height:80%px;'
 
 
 class ReceiveForm(forms.ModelForm):
