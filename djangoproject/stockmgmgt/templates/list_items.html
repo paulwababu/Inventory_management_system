@@ -117,7 +117,7 @@
       var rows = table.rows;
       var total = 0;
       var cell;
-      var column = 2;
+      var column = 3;
       // Assume first row is headers, adjust as required
       // Assume last row is footer, addjust as required
       for (var i = 1, iLen = rows.length - 1; i < iLen; i++) {
@@ -127,12 +127,6 @@
       document.getElementById("total").innerHTML = total.toFixed(2);
 
     });
-
-
-
-
-
-
   </script>
 
 </head>
@@ -167,7 +161,6 @@
       </ul>
     </div>
   </nav>
-
   <main role="main" class="container">
     {% if messages %}
     <ul class="messages">
@@ -182,7 +175,7 @@
         <div class="col-md-5">
           <div class="col-md-12">
 
-            <div class="col-md-12 card mb-5">
+            <div class="col-md-12 card mb-5 ">
               <!-- shopping cart -->
               <div class="card-header text-center bg-dark text-white">
                 <h2>
