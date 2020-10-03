@@ -57,7 +57,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV '/home/paulsaul/Python/Django/inventory management system/inventory'
+set -gx VIRTUAL_ENV '/home/huncho/Documents/programing/labs/inventory/inventory'
 
 # https://github.com/fish-shell/fish-shell/issues/436 altered PATH handling
 if test (echo $FISH_VERSION | head -c 1) -lt 3

@@ -127,6 +127,24 @@
       document.getElementById("total").innerHTML = total.toFixed(2);
 
     });
+
+    function get_cart_data(){
+      names = []
+      prices = []
+      quantity = []
+      var items_name = document.getElementsByClassName("item-name");
+      for(let i = 0; i < items_name.length; i++){
+        names.push(items_name[i].innerHTML);
+      }
+      var items_price = document.getElementsByClassName("item-price")
+      for(let i=0; i < items_price.length; i++){
+        prices.push(items_price[i].innerHTML)
+
+      }
+      let a = Object.assign({}, ...names.map((n, index) => ({[n]: prices[index]})))
+      console.log(a)
+
+    };
   </script>
 
 </head>
@@ -172,12 +190,12 @@
     <div class="jumbotron">
       <div class="header">{{header}}</div>
       <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
           <div class="col-md-12">
 
             <div class="col-md-12 card mb-5 ">
               <!-- shopping cart -->
-              <div class="card-header text-center bg-dark text-white">
+              <div class="card-header text-center bg-dark text-white" id='cart'>
                 <h2>
                   <strong><i><b>Items Cart</b></i></strong>
                 </h2>
@@ -191,12 +209,12 @@
                 <div class="ml-5"><b>Total : </b><span id="total-cart"></span><b> Ksh</b></div>
 
                 <button class=" m-5  btn btn-danger" id="clear-cart">Clear Cart</button>
-                <button class=" m-5  btn btn-warning" id="clear-cart">Issue Items</button>
+                <button class=" m-5  btn btn-warning" id="clear-cart" onclick="get_cart_data()">Issue Items</button>
             </div>
 
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-8">
               <form method="POST" action="">{% csrf_token %}
                 {{form|crispy}}
                 <input class=" btn btn-primary mybutton" type="submit" value="Search">
@@ -268,11 +286,12 @@
 
           for (var i in cartArray) {
               output += "<div>"
-                  +"<p class='item-name'>"+"<b>"+cartArray[i].name+"</b>"+"</p>"
+                  +"<p class='item-name'>"+cartArray[i].name+"</p>"
                   +" <input class='item-count' type='number' data-name='"
                   +cartArray[i].name
                   +"' value='"+cartArray[i].count+"' >"
-                  +" x "+cartArray[i].price
+                  +" X " 
+                  +"<p class='item-price'>"+cartArray[i].price+"</p>"
                   +" = "+"<b>"+cartArray[i].total+"</b>"
                   +" <button class='plus-item' data-name='"
                   +cartArray[i].name+"'>+</button>"

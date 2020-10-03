@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='/home/paulsaul/Python/Django/inventory management system/inventory'
+VIRTUAL_ENV='/home/huncho/Documents/programing/labs/inventory/inventory'
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

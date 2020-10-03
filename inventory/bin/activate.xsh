@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/home/paulsaul/Python/Django/inventory management system/inventory"
+$VIRTUAL_ENV = r"/home/huncho/Documents/programing/labs/inventory/inventory"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]
