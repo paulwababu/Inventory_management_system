@@ -109,6 +109,7 @@
 
   <!-- Custom styles for this template -->
   <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script>
     $(window).load(function () {
 
@@ -129,21 +130,31 @@
     });
 
     function get_cart_data(){
-      names = []
-      prices = []
-      quantity = []
-      var items_name = document.getElementsByClassName("item-name");
-      for(let i = 0; i < items_name.length; i++){
-        names.push(items_name[i].innerHTML);
-      }
-      var items_price = document.getElementsByClassName("item-price")
-      for(let i=0; i < items_price.length; i++){
-        prices.push(items_price[i].innerHTML)
-
-      }
-      let a = Object.assign({}, ...names.map((n, index) => ({[n]: prices[index]})))
-      console.log(a)
-
+      pk = [];
+      names = [];
+      prices = [];
+      quantity = [];
+      var product_id = document.getElementsByClassName("product-id");
+      for(let i = 0; i < product_id.length; i++){
+        pk.push(product_id[i].innerHTML);
+      };
+      // alert(pk)
+      var item_count = document.getElementsByClassName("item-count");
+      for (i = 0 ; i < item_count.length; i++){
+        quantity.push(item_count[i].value);
+      };
+      let a = Object.assign({}, ...pk.map((n, index) => ({[n]: quantity[index]})));
+      var url = "http://127.0.0.1:8000/issue_items/";
+      console.log(url)
+      $.ajax({
+        type: 'GET',
+        url: url,
+        data: a,
+        dataType: 'json',
+        success: shoppingCart.clearCart(),
+        
+       });
+      // window.location.reload();
     };
   </script>
 
@@ -244,10 +255,10 @@
                 <td>{{forloop.counter}}</td>
                 <td>{{instance.category}}</td>
                 <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</a></td>
-                <td><a href="{% url 'add_to_cart' instance.id %}">{{instance.quantity}}</a></td>
+                <td><a href="">{{instance.quantity}}</a></td>
                 <td>{{instance.price}}</td>
                 <td><div>
-                  <button class="btn btn-warning add-to-cart" data-price={{instance.price}} data-name={{instance.item_name}}><small><b>Add to cart </b></small></button>
+                  <button class="btn btn-warning add-to-cart" data-id= {{instance.id}} data-price={{instance.price}} data-name={{instance.item_name}}><small><b>Add to cart </b></small></button>
                 </div></td>
                 <td>{{instance.last_updated}}</td>
                 <td><a href="{% url 'delete_items' instance.id %}"><img
@@ -261,7 +272,7 @@
     </div>
     </div>
   </main>
-  <script src="{% static 'js/js/shoppingCart.js' %}"></script>
+  <script src="../static/js/js/shoppingCart.js"></script>
 
   <script>
 
@@ -269,8 +280,9 @@
           event.preventDefault();
           var name = $(this).attr("data-name");
           var price = Number($(this).attr("data-price"));
-
-          shoppingCart.addItemToCart(name, price, 1);
+          var product_id = ($(this).attr("data-id"));
+          console.log(product_id)
+          shoppingCart.addItemToCart(name, price, 1, product_id);
           displayCart();
       });
 
@@ -281,27 +293,27 @@
 
       function displayCart() {
           var cartArray = shoppingCart.listCart();
-          console.log(cartArray);
+          console.log("we are here "+cartArray);
           var output = "";
-
           for (var i in cartArray) {
-              output += "<div>"
-                  +"<p class='item-name'>"+cartArray[i].name+"</p>"
-                  +" <input class='item-count' type='number' data-name='"
-                  +cartArray[i].name
-                  +"' value='"+cartArray[i].count+"' >"
-                  +" X " 
-                  +"<p class='item-price'>"+cartArray[i].price+"</p>"
-                  +" = "+"<b>"+cartArray[i].total+"</b>"
-                  +" <button class='plus-item' data-name='"
-                  +cartArray[i].name+"'>+</button>"
-                  +" <button class='subtract-item' data-name='"
-                  +cartArray[i].name+"'>-</button>"
-                  +" <button class='delete-item' data-name='"
-                  +cartArray[i].name+"'>X</button>"
-                  +"<hr>"
-                  +"</div>";
-          }
+            output += "<div>"
+                +"<p class='product-id'>"+cartArray[i].product_id+"</p>"
+                +"<p class='item-name'>"+cartArray[i].name+"</p>"
+                +" <input class='item-count' id='items-count' type='number' data-name='"
+                +cartArray[i].name
+                +"' value='"+cartArray[i].count+"' >"
+                +" X " 
+                +"<p class='item-price'>"+cartArray[i].price+"</p>"
+                +" = "+"<b>"+cartArray[i].total+"</b>"
+                +" <button class='plus-item' data-name='"
+                +cartArray[i].name+"'>+</button>"
+                +" <button class='subtract-item' data-name='"
+                +cartArray[i].name+"'>-</button>"
+                +" <button class='delete-item' data-name='"
+                +cartArray[i].name+"'>X</button>"
+                +"<hr>"
+                +"</div>";
+              }
 
           $("#show-cart").html(output);
           $("#count-cart").html( shoppingCart.countCart() );
@@ -337,14 +349,14 @@
       displayCart();
 
   </script>
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+<!-- 
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script> -->
   <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
   <script src="/docs/4.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script> -->
 </body>
 
 </html>

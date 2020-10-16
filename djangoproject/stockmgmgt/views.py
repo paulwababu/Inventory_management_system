@@ -93,8 +93,10 @@ def stock_detail(request, pk):
 
 @login_required
 @login_required
-def issue_items(request, pk):
-    pk_list =  [items for items in pk[1: -1]]
+def issue_items(request):
+    data = request.GET.dict()
+    pk_list =  [keys for keys in data.keys()]
+    quantity_list = [values for values in data.values()]
     clean_list = []
     unwanted_list = []
     for items in pk_list:
@@ -102,12 +104,12 @@ def issue_items(request, pk):
             clean_list.append(items)
         else:
             unwanted_list.append(items)
-          
-    for items in clean_list:
         
-        queryset = Stock.objects.get(id=int(items))
+
+    for pk in pk_list:
+        queryset = Stock.objects.get(id=int(pk))
         instance = queryset    
-        instance.issue_quantity = request.POST["quantity"]
+        instance.issue_quantity = quantity_list[pk_list.index(pk)]
         instance.quantity -= int(instance.issue_quantity)
         instance.issue_by = str(request.user)
         messages.success(
@@ -119,18 +121,17 @@ def issue_items(request, pk):
             + "s now left in Store",
         )
         instance.save()
-        sell_transaction = Transaction(
-            employee_name= request.user.username,
-            transaction_type= "selling",
-            transaction_amount= instance.price * int(instance.issue_quantity),
-            timestamp= date.today(),
-            item_name= instance.item_name,
-        )
-        sell_transaction.save()
+        # import ipdb;ipdb.set_trace()
+        # sell_transaction = Transaction(
+        #     employee_name= request.user.username,
+        #     transaction_type= "selling",
+        #     transaction_amount= instance.price * int(instance.issue_quantity),
+        #     timestamp= date.today(),
+        #     item_name= instance.item_name,
+        # )
+        # sell_transaction.save()
         # import ipdb; ipdb.set_trace()
-        order = Order.objects.get(id_id=items)
-        order.delete()
-  
+        
     return redirect("/list_items/")
     context = {
         "title": "Issue " + str(queryset.item_name),
@@ -191,21 +192,24 @@ def report(request):
     return render(request, "report-1.html", {'categories':json.dumps(categories), 'prices':json.dumps(prices), 'user_count':json.dumps(user_count),'total_sales':json.dumps(total_sales) })
 
 @login_required
-def add_to_cart(request, pk):
-    form = IssueForm()
+def add_to_cart(request):
+    import ipdb;ipdb.set_trace()
+    # form = IssueForm()
     employee_name = request.user.username
-    Product = Stock.objects.filter(pk=pk)
-    price = Product.get().price
-    product_name = Product.get().item_name
-    order_item = Order.objects.get_or_create(id=Stock.objects.get(id=pk),employee_name=employee_name, product_name=product_name, price=price, is_complete=False)
-    order_query = Order.objects.filter(employee_name=employee_name, is_complete=0)
-    order_list = [items for items in order_query.values()]
-    queryset = Stock.objects.all()
-    pk_list = [items["id_id"] for items in order_list]
-    context = {
-        "form": form,
-    }
-    messages.info(request, f"item added to cart ")
+    data = request.GET.dicts()
+    
+    # Product = Stock.objects.filter(pk=pk)
+    # price = Product.get().price
+    # product_name = Product.get().item_name
+    # order_item = Order.objects.get_or_create(id=Stock.objects.get(id=pk),employee_name=employee_name, product_name=product_name, price=price, is_complete=False)
+    # order_query = Order.objects.filter(employee_name=employee_name, is_complete=0)
+    # order_list = [items for items in order_query.values()]
+    # queryset = Stock.objects.all()
+    # pk_list = [items["id_id"] for items in order_list]
+    # context = {
+    #     "form": form,
+    # }
+    # messages.info(request, f"item added to cart ")
     return render(request, "list_items.html", { 'order_list':order_list, 'queryset':queryset, 'pk_list':pk_list, "form":form })
 
 @login_required

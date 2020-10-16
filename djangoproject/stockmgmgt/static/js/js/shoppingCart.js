@@ -4,11 +4,11 @@
 var shoppingCart = (function () {
     // Private methods and properties
     var cart = [];
-
-    function Item(name, price, count) {
+    function Item(name, price, count, product_id) {
         this.name = name
         this.price = price
         this.count = count
+        this.product_id = product_id
     }
 
     function saveCart() {
@@ -17,6 +17,7 @@ var shoppingCart = (function () {
 
     function loadCart() {
         cart = JSON.parse(localStorage.getItem("shoppingCart"));
+        console.log(cart)
         if (cart === null) {
             cart = []
         }
@@ -29,11 +30,11 @@ var shoppingCart = (function () {
     // Public methods and properties
     var obj = {};
 
-    obj.addItemToCart = function (name, price, count) {
-        alert("we are here")
+    obj.addItemToCart = function (name, price, count, product_id) {
         for (var i in cart) {
             if (cart[i].name === name) {
                 cart[i].count += count;
+                cart[i].product_id == product_id;
                 saveCart();
                 return;
             }
@@ -41,7 +42,7 @@ var shoppingCart = (function () {
 
         console.log("addItemToCart:", name, price, count);
 
-        var item = new Item(name, price, count);
+        var item = new Item(name, price, count, product_id);
         cart.push(item);
         saveCart();
     };
@@ -107,7 +108,7 @@ var shoppingCart = (function () {
 
     obj.listCart = function () { // -> array of Items
         var cartCopy = [];
-        console.log("Listing cart");
+        console.log("Listing of the cart");
         console.log(cart);
         for (var i in cart) {
             console.log(i);
