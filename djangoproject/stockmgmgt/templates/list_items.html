@@ -106,8 +106,18 @@
       max-width: 50px;
     }
   </style>
+  <!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
-  <!-- Custom styles for this template -->
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  <!-- Default theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+  <!-- Semantic UI theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+  <!-- Bootstrap theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+    <!-- Custom styles for this template -->
   <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script>
@@ -134,27 +144,52 @@
       names = [];
       prices = [];
       quantity = [];
+      
+      var product_name = document.getElementsByClassName("item-name");
+      for(let i = 0; i < product_name.length;i++){
+        names.push(product_name[i].innerHTML);
+      };
+      
       var product_id = document.getElementsByClassName("product-id");
       for(let i = 0; i < product_id.length; i++){
         pk.push(product_id[i].innerHTML);
       };
       // alert(pk)
+      
       var item_count = document.getElementsByClassName("item-count");
       for (i = 0 ; i < item_count.length; i++){
         quantity.push(item_count[i].value);
       };
+      
       let a = Object.assign({}, ...pk.map((n, index) => ({[n]: quantity[index]})));
       var url = "http://127.0.0.1:8000/issue_items/";
-      console.log(url)
-      $.ajax({
-        type: 'GET',
-        url: url,
-        data: a,
-        dataType: 'json',
-        success: shoppingCart.clearCart(),
+      
+      console.log(names)
+      // if(name.length == 0){
+      //   alert("No items placed in the cart")
+      // }else{
+      //   alert("The following items will be issues out " + names)
         
-       });
-      // window.location.reload();
+      // }
+      
+      alertify.confirm("The Following item(s) will be issued out ." + names,
+        function(){
+          alertify.success('Success. Reload page to view changes ');
+          $.ajax({
+            type: 'GET',
+            url: url,
+            data: a,
+            dataType: 'json',
+            success: shoppingCart.clearCart(),
+            
+           }).done(function (){
+             location.reload(true);
+           });
+        },
+        function(){
+          alertify.error('Process was terminated');
+        });
+
     };
   </script>
 
