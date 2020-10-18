@@ -94,6 +94,7 @@ def stock_detail(request, pk):
 @login_required
 @login_required
 def issue_items(request):
+    import ipdb;ipdb.set_trace()
     data = request.GET.dict()
     pk_list =  [keys for keys in data.keys()]
     quantity_list = [values for values in data.values()]
