@@ -36,11 +36,17 @@
     body {
       min-height: 75rem;
       padding-top: 4.5rem;
+      /* background-color: #3F729B; */
+    }
+    .rgba-gradient {
+      background: -moz-linear-gradient(45deg,#212121, white 100%);
+      background: -webkit-linear-gradient(45deg,#212121, white 100%);
+      background: linear-gradient(to 45deg,#212121, white 100%);
     }
     .jumbotron{
       /* background-color:black; */
       opacity: ;
-      position: absolute;
+      position: fixed;
       left: 0;
     }
     .table {
@@ -102,9 +108,9 @@
       width: 100%;
       text-align: justify;
     }
-    .item-count{
+    /* .item-count{
       max-width: 50px;
-    }
+    } */
   </style>
   <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -154,7 +160,6 @@
       for(let i = 0; i < product_id.length; i++){
         pk.push(product_id[i].innerHTML);
       };
-      // alert(pk)
       
       var item_count = document.getElementsByClassName("item-count");
       for (i = 0 ; i < item_count.length; i++){
@@ -163,8 +168,7 @@
       
       let a = Object.assign({}, ...pk.map((n, index) => ({[n]: quantity[index]})));
       var url = "http://127.0.0.1:8000/issue_items/";
-      
-      console.log(names)
+      alert(item_count)
       // if(name.length == 0){
       //   alert("No items placed in the cart")
       // }else{
@@ -195,7 +199,7 @@
 
 </head>
 
-<body>
+<body class="rgba-gradient container-fluid">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="/">WABCOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -225,86 +229,79 @@
       </ul>
     </div>
   </nav>
-  <main role="main" class="container">
-    {% if messages %}
+  <main class="row">
+    <!-- {% if messages %}
     <ul class="messages">
       {% for message in messages %}
       <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
         {% endfor %}
     </ul>
-    {% endif %}
-    <div class="jumbotron">
-      <div class="header">{{header}}</div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="col-md-12">
+    {% endif %} -->
+    <div class="col-md-3 ml-5 mt-5 card " style="background-color:; border-radius: 50px; opacity: ; ">
+      
+      <div class="mt-2" style="text-align: center;">
+        <h1 class="font-weight-bold">
+          <strong><i><b>Items Cart</b></i></strong>
+        </h1>
+        <hr>
+      </div>  
+      <div class="col-md-10  mb-5 ml-5 mt-5 ">
+        <!-- shopping cart -->
+        <div>
+          <ul id="show-cart" class="mt-5 container">
+              <li>???????</li>
+              <hr>
+          </ul>
+          <div class="ml-5"><b>Items In Cart : </b><span id="count-cart">X</span></div>
+          <div class="ml-5"><b>Total : </b><span id="total-cart"></span><b> Ksh</b></div>
 
-            <div class="col-md-12 card mb-5 ">
-              <!-- shopping cart -->
-              <div class="card-header text-center bg-dark text-white" id='cart'>
-                <h2>
-                  <strong><i><b>Items Cart</b></i></strong>
-                </h2>
-              </div>
-              <div>
-                <ul id="show-cart" class="mt-5 container">
-                    <li>???????</li>
-                    <hr>
-                </ul>
-                <div class="ml-5"><b>Items In Cart : </b><span id="count-cart">X</span></div>
-                <div class="ml-5"><b>Total : </b><span id="total-cart"></span><b> Ksh</b></div>
+          <button class=" mt-3  btn btn-danger" id="clear-cart">Clear Cart</button>
+          <button class=" mt-3  btn btn-warning" id="clear-cart" onclick="get_cart_data()">Issue Items</button>
+      </div>
+      <hr>
+      </div>
 
-                <button class=" m-5  btn btn-danger" id="clear-cart">Clear Cart</button>
-                <button class=" m-5  btn btn-warning" id="clear-cart" onclick="get_cart_data()">Issue Items</button>
-            </div>
-
-            </div>
-
-            <div class="col-md-8">
-              <form method="POST" action="">{% csrf_token %}
-                {{form|crispy}}
-                <input class=" btn btn-primary mybutton" type="submit" value="Search">
-              </form>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="col-sm-7">
-          <div class="display_table"
-            style="border-bottom-right-radius: 20px; padding-left: 5px; padding-right: 5px; padding-bottom: 20px; box-shadow: 12px 12px 20px 6px #2e6da4;">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>COUNT</th>
-                  <th>CATEGORY</th>
-                  <th>ITEM NAME</th>
-                  <th>QUANTITY IN STORE</th>
-                  <th>PRICE(ksh)</th>
-                  <th>TIMESTAMP</th>
-                  <th>LAST UPDATED</th>
-                  <th>DELETE ITEMS</th>
-                </tr>
-              </thead>
-              {% for instance in queryset%}
-              <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{instance.category}}</td>
-                <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</a></td>
-                <td><a href="">{{instance.quantity}}</a></td>
-                <td>{{instance.price}}</td>
-                <td><div>
-                  <button class="btn btn-warning add-to-cart" data-id= {{instance.id}} data-price={{instance.price}} data-name={{instance.item_name}}><small><b>Add to cart </b></small></button>
-                </div></td>
-                <td>{{instance.last_updated}}</td>
-                <td><a href="{% url 'delete_items' instance.id %}"><img
-                      src="https://img.icons8.com/color/28/000000/delete-sign.png" /></a></td>
-              </tr>
-              {% endfor %}
-            </table>
-          </div>
-        </div>
+      <div class="col-md-8 ml-5 mb-5 mt-2">
+        <h1 class="font-weight-bold">
+          <strong><i><b>Items Search</b></i></strong>
+        </h1>
+        <hr>
+        <form class="mt-3" method="POST" action="">{% csrf_token %}
+          {{form|crispy}}
+          <input class=" btn btn-primary mybutton" type="submit" value="Search">
+        </form>
       </div>
     </div>
+  </div>
+  <br>
+</div>
+    </div>
+    
+    <div class="col-md-8" style="text-align: center;">
+      <div class="col-md-12 mt-5">
+        <h1 class="font-weight-bold"><i><strong><b>Items List</b></strong></i></h1>
+        <hr style="display: block; width: 100%;">
+
+      </div>
+      <div class="col-md-12 ml-5 row">
+        <!-- <div class="row"> -->
+          {% for instance in queryset%}
+          <div class="card gradient-card col-md-3 m-3" style="text-align: justify; border-bottom-right-radius: 20px; padding-left: 5px; padding-right: 5px; padding-bottom: 20px; box-shadow: 12px 12px 20px 6px #2e6da4; background-image: url({% static 'img/items.jpeg' %});">
+            <h4 class="font-weight-bold float-right">{{instance.category}}</h4>
+            <p class="font-weight-bold float-right">Item Name : <a href="{% url 'update_items' instance.id %}" class=" text-uppercase text-muted">{{instance.item_name}}</a></p>
+            <p class="item-count font-weight-bold float-right">Quantity : <a href="" class="text-uppercase text-muted ">{{instance.quantity}}</a></p>
+            <p class="font-weight-bold float-right">{{instance.price}}</p>
+            
+              <button class="btn btn-primary add-to-cart" data-id= {{instance.id}} data-price={{instance.price}} data-name={{instance.item_name}}><small><b>Add to cart </b></small></button>
+            
+            <button class="btn btn-warning mt-1 mb-0" ><a href="{% url 'delete_items' instance.id %}" style="color: red;"><img
+              src="https://img.icons8.com/color/28/000000/delete-sign.png" />Delete item</a></button>
+          </p>
+          </div>
+          
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </main>
   <script src="../static/js/js/shoppingCart.js"></script>
@@ -333,7 +330,7 @@
           for (var i in cartArray) {
             output += "<div>"
                 +"<p class='product-id'>"+cartArray[i].product_id+"</p>"
-                +"<p class='item-name'>"+cartArray[i].name+"</p>"
+                +"<p class='item-name font-weight-bold '> Item Name : "+cartArray[i].name+"</p>"
                 +" <input class='item-count' id='items-count' type='number' data-name='"
                 +cartArray[i].name
                 +"' value='"+cartArray[i].count+"' >"
@@ -391,7 +388,7 @@
   <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
   <script src="/docs/4.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"
-    crossorigin="anonymous"></script> -->
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
