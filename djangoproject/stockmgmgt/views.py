@@ -94,18 +94,17 @@ def stock_detail(request, pk):
 @login_required
 @login_required
 def issue_items(request):
-    import ipdb;ipdb.set_trace()
     data = request.GET.dict()
-    pk_list =  [keys for keys in data.keys()]
-    quantity_list = [values for values in data.values()]
+    Product_id = list(data.keys())
+    pk_list = clean_keys_data(Product_id)
+
+    for keys, values in data.items():
+        quantity_list = [values for values in data.values()]
     clean_list = []
     unwanted_list = []
-    for items in pk_list:
-        if items > '0':
-            clean_list.append(items)
-        else:
-            unwanted_list.append(items)
-        
+    
+    total_transacted = quantity_list.pop()
+    
 
     for pk in pk_list:
         queryset = Stock.objects.get(id=int(pk))
@@ -122,17 +121,16 @@ def issue_items(request):
             + "s now left in Store",
         )
         instance.save()
-        # import ipdb;ipdb.set_trace()
-        # sell_transaction = Transaction(
-        #     employee_name= request.user.username,
-        #     transaction_type= "selling",
-        #     transaction_amount= instance.price * int(instance.issue_quantity),
-        #     timestamp= date.today(),
-        #     item_name= instance.item_name,
-        # )
-        # sell_transaction.save()
-        # import ipdb; ipdb.set_trace()
-        
+    
+    sell_transaction = Transaction(
+        employee_name= request.user.username,
+        transaction_amount= total_transacted,
+        timestamp= date.today(),
+        product_ids= ','.join(pk_list),
+        items_count= ','.join(quantity_list)
+    )
+    sell_transaction.save()
+    
     return redirect("/list_items/")
     context = {
         "title": "Issue " + str(queryset.item_name),
@@ -229,3 +227,19 @@ def delete_from_cart(request, id):
     
     messages.info(request, f"item added to cart ")
     return render(request, "list_items.html", { 'order_list':order_list, 'queryset':queryset, 'pk_list':pk_list })
+
+def clean_keys_data(list):
+    new_list = []
+    "removing 'a[' from items in the keys list "
+
+    for items in list:
+        data = items.replace("a[", "")
+        new_list.append(data)
+    
+    clean_list = []
+    "removing ']' from items in new list "
+    for items in new_list:
+        data = items.replace("]", "")
+        clean_list.append(data)
+    clean_list.pop()
+    return clean_list 

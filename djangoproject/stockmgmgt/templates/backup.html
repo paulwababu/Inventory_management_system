@@ -1,0 +1,83 @@
+<main role="main" class="container">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="jumbotron col-md-12">
+      <div class="header">{{header}}</div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="col-md-12">
+
+            <div class="col-md-12 card mb-5 ">
+              <!-- shopping cart -->
+              <div class="card-header text-center bg-dark text-white" id='cart'>
+                <h2>
+                  <strong><i><b>Items Cart</b></i></strong>
+                </h2>
+              </div>
+              <div>
+                <ul id="show-cart" class="mt-5 container">
+                    <li>???????</li>
+                    <hr>
+                </ul>
+                <div class="ml-5"><b>Items In Cart : </b><span id="count-cart">X</span></div>
+                <div class="ml-5"><b>Total : </b><span id="total-cart"></span><b> Ksh</b></div>
+
+                <button class=" m-5  btn btn-danger" id="clear-cart">Clear Cart</button>
+                <button class=" m-5  btn btn-warning" id="clear-cart" onclick="get_cart_data()">Issue Items</button>
+            </div>
+
+            </div>
+
+            <div class="col-md-8">
+              <form method="POST" action="">{% csrf_token %}
+                {{form|crispy}}
+                <input class=" btn btn-primary mybutton" type="submit" value="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+            <div class="col-sm-7">
+              <div class="display_table"
+                style="border-bottom-right-radius: 20px; padding-left: 5px; padding-right: 5px; padding-bottom: 20px; box-shadow: 12px 12px 20px 6px #2e6da4;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>COUNT</th>
+                      <th>CATEGORY</th>
+                      <th>ITEM NAME</th>
+                      <th>QUANTITY IN STORE</th>
+                      <th>PRICE(ksh)</th>
+                      <th>TIMESTAMP</th>
+                      <th>LAST UPDATED</th>
+                      <th>DELETE ITEMS</th>
+                    </tr>
+                  </thead>
+                  {% for instance in queryset%}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{instance.category}}</td>
+                    
+                    <td><a href="">{{instance.quantity}}</a></td>
+                    <td>{{instance.price}}</td>
+                    <td><div>
+                      <button class="btn btn-warning add-to-cart" data-id= {{instance.id}} data-price={{instance.price}} data-name={{instance.item_name}}><small><b>Add to cart </b></small></button>
+                    </div></td>
+                    <td>{{instance.last_updated}}</td>
+                    <td><a href="{% url 'delete_items' instance.id %}"><img
+                          src="https://img.icons8.com/color/28/000000/delete-sign.png" /></a></td>
+                  </tr>
+                  
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+    </div>
+  </main>

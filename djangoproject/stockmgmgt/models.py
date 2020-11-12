@@ -40,10 +40,10 @@ class StockHistory(models.Model):
 
 class Transaction(models.Model):
     employee_name = models.CharField(max_length=50, blank=False)
-    transaction_type = models.CharField(max_length=50, blank=False)
     transaction_amount = models.IntegerField(default='0', blank=False)
     timestamp = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)        
-    item_name = models.CharField(max_length=50)
+    product_ids = models.CharField(max_length=256)
+    items_count = models.CharField(max_length=256)
 
 class Order(models.Model):
     id= models.OneToOneField('stock', on_delete=models.PROTECT, primary_key=True, unique=True)
