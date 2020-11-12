@@ -108,9 +108,9 @@
       width: 100%;
       text-align: justify;
     }
-    /* .item-count{
-      max-width: 50px;
-    } */
+    .cart{
+      position: relative;
+    }
   </style>
   <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -128,15 +128,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script>
     $(window).load(function () {
-
-
-      var table = document.getElementById("cart");
-      var rows = table.rows;
-      var total = 0;
-      var cell;
-      var column = 3;
-      // Assume first row is headers, adjust as required
-      // Assume last row is footer, addjust as required
       for (var i = 1, iLen = rows.length - 1; i < iLen; i++) {
         cell = rows[i].cells[column];
         total += Number(cell.textContent || cell.innerText);
@@ -165,24 +156,25 @@
       for (i = 0 ; i < item_count.length; i++){
         quantity.push(item_count[i].value);
       };
-      
+      var total_price = document.getElementById("total-cart");
       let a = Object.assign({}, ...pk.map((n, index) => ({[n]: quantity[index]})));
-      var url = "http://radiologyassistant.tk/issue_items/";
-      alert(item_count)
-      // if(name.length == 0){
-      //   alert("No items placed in the cart")
-      // }else{
-      //   alert("The following items will be issues out " + names)
-        
-      // }
+      var url = "http://127.0.0.1:8000/issue_items/";
       
+      item_count = JSON.stringify(quantity)
+      product_id = JSON.stringify(pk)
+
       alertify.confirm("The Following item(s) will be issued out ." + names,
         function(){
           alertify.success('Success. Reload page to view changes ');
           $.ajax({
             type: 'GET',
             url: url,
-            data: a,
+            data: {
+              // quantity: item_count,
+              // product_id: product_id,
+              a:a, 
+              total: "24356",
+            },
             dataType: 'json',
             success: shoppingCart.clearCart(),
             
@@ -237,31 +229,32 @@
         {% endfor %}
     </ul>
     {% endif %} -->
-    <div class="col-md-3 ml-5 mt-5 card " style="background-color:; border-radius: 50px; opacity: ; ">
-      
-      <div class="mt-2" style="text-align: center;">
-        <h1 class="font-weight-bold">
-          <strong><i><b>Items Cart</b></i></strong>
-        </h1>
-        <hr>
-      </div>  
-      <div class="col-md-10  mb-5 ml-5 mt-5 ">
-        <!-- shopping cart -->
-        <div>
-          <ul id="show-cart" class="mt-5 container">
+    <div class="col-md-3 ml-5 mt-5 card " style="background-color:; border-radius: 50px; position: relative; ">
+      <div class="cart">
+
+        <div class="mt-2" style="text-align: center; position: relative;">
+          <h1 class="font-weight-bold">
+            <strong><i><b>Items Cart</b></i></strong>
+          </h1>
+          <hr>
+        </div>  
+        <div class="col-md-10  mb-5 ml-5 mt-5 ">
+          <!-- shopping cart -->
+          <div>
+            <ul id="show-cart" class="mt-5 container">
               <li>???????</li>
               <hr>
-          </ul>
-          <div class="ml-5"><b>Items In Cart : </b><span id="count-cart">X</span></div>
-          <div class="ml-5"><b>Total : </b><span id="total-cart"></span><b> Ksh</b></div>
-
-          <button class=" mt-3  btn btn-danger" id="clear-cart">Clear Cart</button>
-          <button class=" mt-3  btn btn-warning" id="clear-cart" onclick="get_cart_data()">Issue Items</button>
-      </div>
-      <hr>
-      </div>
-
-      <div class="col-md-8 ml-5 mb-5 mt-2">
+            </ul>
+            <div class="ml-5"><b>Items In Cart : </b><span id="count-cart">X</span></div>
+            <div class="ml-5"><b>Total : </b><span id="total-cart"></span><b> Ksh</b></div>
+            
+            <button class=" mt-3  btn btn-danger" id="clear-cart">Clear Cart</button>
+            <button class=" mt-3  btn btn-warning" id="clear-cart" onclick="get_cart_data()">Issue Items</button>
+          </div>
+          <hr>
+        </div>
+        
+        <div class="col-md-8 ml-5 mb-5 mt-2">
         <h1 class="font-weight-bold">
           <strong><i><b>Items Search</b></i></strong>
         </h1>
@@ -275,9 +268,10 @@
   </div>
   <br>
 </div>
-    </div>
-    
-    <div class="col-md-8" style="text-align: center;">
+</div>
+</div>
+
+<div class="col-md-8" style="text-align: center;">
       <div class="col-md-12 mt-5">
         <h1 class="font-weight-bold"><i><strong><b>Items List</b></strong></i></h1>
         <hr style="display: block; width: 100%;">
@@ -313,7 +307,6 @@
           var name = $(this).attr("data-name");
           var price = Number($(this).attr("data-price"));
           var product_id = ($(this).attr("data-id"));
-          console.log(product_id)
           shoppingCart.addItemToCart(name, price, 1, product_id);
           displayCart();
       });
@@ -325,7 +318,6 @@
 
       function displayCart() {
           var cartArray = shoppingCart.listCart();
-          console.log("we are here "+cartArray);
           var output = "";
           for (var i in cartArray) {
             output += "<div>"

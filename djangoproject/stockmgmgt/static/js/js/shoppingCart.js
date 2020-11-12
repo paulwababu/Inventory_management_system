@@ -17,7 +17,6 @@ var shoppingCart = (function () {
 
     function loadCart() {
         cart = JSON.parse(localStorage.getItem("shoppingCart"));
-        console.log(cart)
         if (cart === null) {
             cart = []
         }
@@ -108,10 +107,7 @@ var shoppingCart = (function () {
 
     obj.listCart = function () { // -> array of Items
         var cartCopy = [];
-        console.log("Listing of the cart");
-        console.log(cart);
         for (var i in cart) {
-            console.log(i);
             var item = cart[i];
             var itemCopy = {};
             for (var p in item) {
